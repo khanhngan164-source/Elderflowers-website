@@ -1,14 +1,18 @@
 "use client";
 
-import { useBag } from "./BagProvider";
+import { useState } from "react";
+import { postToCms } from "@/lib/api";
+import { useBag, useContent } from "./BagProvider";
 import { Logo } from "./ui";
 
 export function AnnouncementBar() {
+  const { settings } = useContent();
+  if (!settings.announcement_en && !settings.announcement_vi) return null;
   return (
     <div className="announce">
-      <span>Free delivery in Saigon &amp; Đà Lạt over 1.000.000₫</span>
-      <span aria-hidden="true" className="announce__dot">·</span>
-      <span lang="vi" className="vi">Miễn phí giao hàng cho đơn từ 1 triệu</span>
+      {settings.announcement_en && <span>{settings.announcement_en}</span>}
+      {settings.announcement_en && settings.announcement_vi && <span aria-hidden="true" className="announce__dot">·</span>}
+      {settings.announcement_vi && <span lang="vi" className="vi">{settings.announcement_vi}</span>}
     </div>
   );
 }
@@ -40,12 +44,14 @@ export function Header() {
 
 export function Footer() {
   const { showToast } = useBag();
+  const { settings } = useContent();
+  const [sending, setSending] = useState(false);
   return (
     <footer className="site-footer">
       <div className="container site-footer__grid">
         <div className="stack-14">
           <Logo variant="cream" size={110} />
-          <span className="on-dark-muted small">Grown in Madagui · Bottled in Saigon</span>
+          <span className="on-dark-muted small">{settings.footer_tagline}</span>
         </div>
         <div className="footer-links">
           <span className="kicker kicker--butter">Shop</span>
@@ -62,11 +68,17 @@ export function Footer() {
         </div>
         <form
           className="stack-10"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            // TODO: connect to the newsletter provider (Mailchimp / Klaviyo / Zalo OA).
-            showToast("Thank you · Cảm ơn bạn đã đăng ký");
-            e.currentTarget.reset();
+            const form = e.currentTarget;
+            const data = new FormData(form);
+            setSending(true);
+            const res = await postToCms({ type: "newsletter", email: data.get("email"), website: data.get("website") });
+            setSending(false);
+            if (res.ok) {
+              showToast("Thank you · Cảm ơn bạn đã đăng ký");
+              form.reset();
+            } else showToast(res.error);
           }}
         >
           <span className="kicker kicker--butter">Letters from the garden</span>
@@ -74,7 +86,8 @@ export function Footer() {
           <label className="newsletter">
             <span className="sr-only">Email</span>
             <input type="email" name="email" required placeholder="email@example.com" autoComplete="email" />
-            <button type="submit" aria-label="Subscribe">→</button>
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />
+            <button type="submit" aria-label="Subscribe" disabled={sending}>{sending ? "…" : "→"}</button>
           </label>
         </form>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { feesOf, priceOf, type SiteContent } from "@/lib/content";
 import { addToBag, bagTotals, changeQty, type BagItem } from "@/lib/logic";
 
 const STORAGE_KEY = "eg-bag-v1";
@@ -8,6 +9,7 @@ const STORAGE_KEY = "eg-bag-v1";
 type BagState = { items: BagItem[]; wrap: boolean; wrapNote: string };
 
 type BagContextValue = BagState & {
+  content: SiteContent;
   totals: ReturnType<typeof bagTotals>;
   isOpen: boolean;
   open: () => void;
@@ -18,7 +20,8 @@ type BagContextValue = BagState & {
   setWrapNote: (note: string) => void;
   clear: () => void;
   toast: string | null;
-  showToast: (msg: string) => void;
+  showToast: (msg: string, withBagLink?: boolean) => void;
+  toastHasBagLink: boolean;
 };
 
 const BagContext = createContext<BagContextValue | null>(null);
@@ -29,24 +32,34 @@ export function useBag() {
   return ctx;
 }
 
+/** Site content from the sheet, available to every component. */
+export const useContent = () => useBag().content;
+
 const EMPTY: BagState = { items: [], wrap: false, wrapNote: "" };
 
-export function BagProvider({ children }: { children: ReactNode }) {
+export function BagProvider({ content, children }: { content: SiteContent; children: ReactNode }) {
   const [state, setState] = useState<BagState>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ msg: string; bag: boolean } | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Restore the bag after mount (localStorage is unavailable during static pre-render,
-  // and can throw in private mode — the bag then simply isn't remembered).
+  // Restore the bag after mount (localStorage is unavailable during pre-render, and can throw in
+  // private mode). Saved lines are repriced from current content; discontinued ones are dropped.
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setState({ ...EMPTY, ...JSON.parse(saved) });
+      if (saved) {
+        const s: BagState = { ...EMPTY, ...JSON.parse(saved) };
+        const items = s.items.flatMap((it) => {
+          const price = priceOf(it.key, content);
+          return price == null ? [] : [{ ...it, price }];
+        });
+        setState({ ...s, items });
+      }
     } catch {}
     setHydrated(true);
-  }, []);
+  }, [content]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -57,31 +70,35 @@ export function BagProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => () => clearTimeout(toastTimer.current), []);
 
-  const showToast = useCallback((msg: string) => {
+  const showToast = useCallback((msg: string, withBagLink = false) => {
     clearTimeout(toastTimer.current);
-    setToast(msg);
-    toastTimer.current = setTimeout(() => setToast(null), 2600);
+    setToast({ msg, bag: withBagLink });
+    toastTimer.current = setTimeout(() => setToast(null), withBagLink ? 2600 : 4200);
   }, []);
+
+  const fees = useMemo(() => feesOf(content.settings), [content]);
 
   const value = useMemo<BagContextValue>(
     () => ({
       ...state,
-      totals: bagTotals(state.items, state.wrap),
+      content,
+      totals: bagTotals(state.items, state.wrap, fees),
       isOpen,
       open: () => setOpen(true),
       close: () => setOpen(false),
       add: (item) => {
         setState((s) => ({ ...s, items: addToBag(s.items, item) }));
-        showToast("Added · Đã thêm — " + item.name);
+        showToast("Added · Đã thêm — " + item.name, true);
       },
       setQty: (key, delta) => setState((s) => ({ ...s, items: changeQty(s.items, key, delta) })),
       setWrap: (wrap) => setState((s) => ({ ...s, wrap })),
       setWrapNote: (wrapNote) => setState((s) => ({ ...s, wrapNote })),
       clear: () => setState(EMPTY),
-      toast,
+      toast: toast?.msg ?? null,
+      toastHasBagLink: !!toast?.bag,
       showToast,
     }),
-    [state, isOpen, toast, showToast],
+    [state, content, fees, isOpen, toast, showToast],
   );
 
   return <BagContext.Provider value={value}>{children}</BagContext.Provider>;

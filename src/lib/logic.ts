@@ -1,9 +1,8 @@
 // Pure business rules shared by the UI. Kept free of React so they can be unit-tested.
 import { MONTHS_SHORT, WEEKDAYS_SHORT, type Ingredient, type Swatch } from "./data";
 
-export const WRAP_FEE = 30000;
-export const DELIVERY_FEE = 35000;
-export const FREE_DELIVERY_THRESHOLD = 1000000;
+export type Fees = { delivery: number; freeFrom: number; wrap: number };
+export const DEFAULT_FEES: Fees = { delivery: 35000, freeFrom: 1000000, wrap: 30000 };
 export const WRAP_NOTE_MAX = 160;
 export const MAX_QTY = 9;
 
@@ -31,18 +30,19 @@ export function changeQty(bag: BagItem[], key: string, delta: number): BagItem[]
     .filter((b) => b.qty > 0);
 }
 
-export function bagTotals(bag: BagItem[], wrap: boolean) {
+export function bagTotals(bag: BagItem[], wrap: boolean, fees: Fees = DEFAULT_FEES) {
   const count = bag.reduce((a, b) => a + b.qty, 0);
   const subtotal = bag.reduce((a, b) => a + b.price * b.qty, 0);
-  const wrapFee = wrap && subtotal > 0 ? WRAP_FEE : 0;
+  const wrapFee = wrap && subtotal > 0 ? fees.wrap : 0;
   // Threshold is measured on the goods subtotal, before gift wrap.
-  const delivery = subtotal === 0 || subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
-  const untilFree = delivery === 0 ? 0 : FREE_DELIVERY_THRESHOLD - subtotal;
+  const delivery = subtotal === 0 || subtotal >= fees.freeFrom ? 0 : fees.delivery;
+  const untilFree = delivery === 0 ? 0 : fees.freeFrom - subtotal;
   return { count, subtotal, wrapFee, delivery, untilFree, total: subtotal + wrapFee + delivery };
 }
 
 export function seasonStatus(g: Pick<Ingredient, "months">, month: number) {
   const inSeason = g.months.includes(month);
+  if (g.months.length === 0) return { inSeason, label: "" };
   if (!inSeason) {
     const next = g.months.find((m) => m > month) ?? Math.min(...g.months);
     return { inSeason, label: "From " + MONTHS_SHORT[next] };
@@ -54,11 +54,12 @@ export function seasonStatus(g: Pick<Ingredient, "months">, month: number) {
 
 /** The next `count` Fridays, Saturdays and Sundays after `from` (the farm opens Fri–Sun). */
 export function upcomingVisitDays(from: Date, count = 6) {
-  const days: { key: string; weekday: string; day: number; month: string }[] = [];
+  const days: { key: string; iso: string; weekday: string; day: number; month: string }[] = [];
   for (let i = 1; days.length < count && i < 40; i++) {
     const d = new Date(from.getFullYear(), from.getMonth(), from.getDate() + i);
     if ([0, 5, 6].includes(d.getDay())) {
-      days.push({ key: d.toDateString(), weekday: WEEKDAYS_SHORT[d.getDay()], day: d.getDate(), month: MONTHS_SHORT[d.getMonth()] });
+      const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      days.push({ key: iso, iso, weekday: WEEKDAYS_SHORT[d.getDay()], day: d.getDate(), month: MONTHS_SHORT[d.getMonth()] });
     }
   }
   return days;
@@ -67,10 +68,15 @@ export function upcomingVisitDays(from: Date, count = 6) {
 export type CheckoutForm = { name: string; phone: string; address: string };
 export type CheckoutErrors = Partial<Record<keyof CheckoutForm, string>>;
 
-export function validateCheckout(f: CheckoutForm): CheckoutErrors {
+export function validateContact(f: Pick<CheckoutForm, "name" | "phone">): CheckoutErrors {
   const e: CheckoutErrors = {};
   if (f.name.trim().length < 2) e.name = "Please add a name · Vui lòng nhập họ tên.";
   if (!/^0\d{9}$/.test(f.phone.replace(/\s/g, ""))) e.phone = "10 digits, e.g. 0901 234 567 · Số điện thoại chưa đúng.";
+  return e;
+}
+
+export function validateCheckout(f: CheckoutForm): CheckoutErrors {
+  const e = validateContact(f);
   if (f.address.trim().length < 8) e.address = "Street, ward & district · Vui lòng nhập địa chỉ.";
   return e;
 }

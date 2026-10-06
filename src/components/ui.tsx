@@ -10,13 +10,23 @@ export function useToday() {
   return today;
 }
 
-export const swatchVars = (s: Swatch) => ({ "--t1": s[0], "--t2": s[1] }) as CSSProperties;
+/** Placeholder stripe colours, or the real photo when one is set. */
+export const swatchVars = (s: Swatch, image?: string) =>
+  ({ "--t1": s[0], "--t2": s[1], ...(image ? { backgroundImage: `url("${image.replace(/"/g, "%22")}")`, backgroundSize: "cover", backgroundPosition: "center" } : {}) }) as CSSProperties;
 
 /**
  * Striped photo placeholder from the design handoff. The caption describes the intended shot;
  * replace with real photography (<img>) once the client supplies it.
  */
-export function Photo({ swatch, caption, className = "", dark = false }: { swatch: Swatch; caption?: string; className?: string; dark?: boolean }) {
+export function Photo({ src, swatch, caption, className = "", dark = false, eager = false }: { src?: string; swatch: Swatch; caption?: string; className?: string; dark?: boolean; eager?: boolean }) {
+  if (src) {
+    return (
+      <div className={`photo photo--img ${className}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={caption ?? ""} loading={eager ? "eager" : "lazy"} decoding="async" />
+      </div>
+    );
+  }
   return (
     <div className={`photo ${dark ? "photo--dark" : ""} ${className}`} style={swatchVars(swatch)} role="img" aria-label={caption ? `Photo: ${caption}` : undefined}>
       {caption && <span className="photo__caption">Photo · {caption}</span>}
@@ -61,3 +71,11 @@ export function Logo({ variant = "plum", size = 64 }: { variant?: "plum" | "crea
     </span>
   );
 }
+
+// Letters Instrument Serif lacks (ă đ ĩ ũ ơ ư and every tone-marked vowel). Text containing them is
+// set in the Vietnamese serif as a whole, so a word never mixes two typefaces.
+const VI_ONLY = /[ăđĩũơưĂĐĨŨƠƯ\u0300-\u036f\u1EA0-\u1EF9]/;
+
+/** Props for a serif element whose text comes from the sheet and may be Vietnamese. */
+export const serifText = (text: string, className = "") =>
+  VI_ONLY.test(text) ? { lang: "vi", className: `${className} serif-vi`.trim() } : { className };
