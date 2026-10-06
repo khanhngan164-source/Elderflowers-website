@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><style>body{margin:0;background:#E9E3D6;font-family:'Hanken Grotesk',system-ui,sans-serif;color:#3E2330}a{color:#3E2330}a:hover{color:#55654A}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#3E2330;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 12px/1.4 system-ui,sans-serif;color:rgba(0,0,0,.6);max-width:412px}.dv-opt:target .dv-oid{background:#55654A;color:#fff}.dv-next{margin:26px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.55)}</style></helmet>
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Three home directions — each phone is the full working app (story → ingredient → shop, box, bag, checkout, visit booking, account)</span></div>
+  <div class="dv-opts">
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a><span><b>The Almanac</b> — a monthly magazine cover. Issue story leads, contents list routes into ingredients, recipes and visits.</span></div>
+      <dc-import name="Elderflowers App v2" home-variant="almanac" hint-size="412px,866px"></dc-import>
+    </div>
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a><span><b>The Harvest Calendar</b> — home is the season. Tap a month to see what’s being picked and what’s made from it.</span></div>
+      <dc-import name="Elderflowers App v2" home-variant="calendar" hint-size="412px,866px"></dc-import>
+    </div>
+    <div class="dv-opt" id="2c">
+      <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a><span><b>Field Notes</b> — full-screen chapters that snap as you scroll; each ends in one ingredient or product.</span></div>
+      <dc-import name="Elderflowers App v2" home-variant="field" hint-size="412px,866px"></dc-import>
+    </div>
+  </div>
+  <p class="dv-next">Try next: "<a class="dv-oid" href="#2a">2a</a> but with the month strip from <a class="dv-oid" href="#2b">2b</a>" · "make <a class="dv-oid" href="#2c">2c</a> chapters full-bleed photo" · "add a VI-only language mode"</p>
+</section>
+</x-dc>
+</body>
+</html>

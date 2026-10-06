@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F5F0E6;color:#3E2330;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#3E2330}a:hover{color:#55654A}html{scroll-behavior:smooth}textarea{font-family:inherit}</style>
+</helmet>
+<div style="min-height:100vh;background:#F5F0E6;position:relative">
+
+  <div style="background:#4A2735;color:#F5F0E6;font-size:12.5px;padding:9px 20px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;text-align:center">
+    <span>Free delivery in Saigon &amp; Đà Lạt over 1.000.000₫</span><span style="opacity:.6">·</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:14px">Miễn phí giao hàng cho đơn từ 1 triệu</span>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:20;background:#F5F0E6;border-bottom:1px solid rgba(62,35,48,.12)">
+    <div style="max-width:1320px;margin:0 auto;padding:10px 28px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px">
+      <nav style="display:flex;gap:22px;flex-wrap:wrap;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600">
+        <a href="#shop" style="text-decoration:none">Shop</a>
+        <a href="#calendar" style="text-decoration:none">Harvest</a>
+        <a href="#box" style="text-decoration:none">Flower Box</a>
+      </nav>
+      <a href="#top" style="display:block"><img src="assets/logo-plum.png" alt="Elderflowers Garden" style="height:64px;width:auto;display:block"></a>
+      <nav style="display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end;align-items:center;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600">
+        <a href="#journal" style="text-decoration:none">Journal</a>
+        <a href="#visit" style="text-decoration:none">Visit</a>
+        <span onClick="{{ openBag }}" style="cursor:pointer;padding:9px 16px;border:1px solid #3E2330;border-radius:999px">Bag ({{ bagCount }})</span>
+      </nav>
+    </div>
+  </header>
+
+  <section id="top" style="max-width:1320px;margin:0 auto;padding:28px 28px 0">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#6E5A62;padding-bottom:14px;border-bottom:1px solid #3E2330">
+      <span>Issue No. 14 · Số 14</span><span>{{ monthEn }} · {{ monthVi }}</span><span>Madagui, Lâm Đồng · 1,000m</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;padding:36px 0 0;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:12px">
+        <div style="font-family:'Instrument Serif',serif;font-size:clamp(56px,8vw,118px);line-height:.88;letter-spacing:-.035em;text-wrap:balance">The Elder&shy;flower Issue</div>
+        <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(22px,2.4vw,30px);color:#6E5A62">Số đặc biệt: Hoa cơm cháy</div>
+        <p style="margin:0;font-size:17px;line-height:1.6;max-width:480px;color:#4F3A44;text-wrap:pretty">Cordials, flowers and herbal goods from a hill once planted with coffee — picked before the sun burns the mist off, bottled and poured by hand.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="#story" style="background:#3E2330;color:#F5F0E6;padding:16px 26px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none">Read the story</a>
+          <a href="#shop" style="border:1px solid #3E2330;padding:15px 26px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none">Shop the harvest</a>
+        </div>
+      </div>
+      <div style="aspect-ratio:5/4;background:repeating-linear-gradient(135deg,#E6DFC6 0 10px,#DCD3B6 10px 20px);display:flex;align-items:flex-end;padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#5b4650;background:rgba(245,240,230,.85);padding:4px 8px">PHOTO · ELDERFLOWER HEADS AT DAWN, MADAGUI</span></div>
+    </div>
+  </section>
+
+  <section id="story" style="max-width:1320px;margin:0 auto;padding:96px 28px 0;scroll-margin-top:90px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:40px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#55654A">The farm story · Câu chuyện</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:clamp(40px,4.4vw,60px);line-height:.95;letter-spacing:-.02em">Why we pick before the sun.</div>
+        <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:#6E5A62">Vì sao chúng tôi hái hoa trước bình minh.</div>
+      </div>
+      <sc-for list="{{ storyBlocks }}" as="b" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:14px;border-top:1px solid #3E2330;padding-top:14px">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#6E5A62">{{ b.kicker }}</div>
+          <p style="margin:0;font-size:16px;line-height:1.62;text-wrap:pretty">{{ b.text }}</p>
+          <div onClick="{{ b.pick }}" style="margin-top:auto;display:flex;gap:12px;align-items:center;cursor:pointer;padding-top:6px">
+            <div style="width:52px;height:52px;border-radius:50%;flex:none;background:repeating-linear-gradient(135deg,{{ b.t1 }} 0 5px,{{ b.t2 }} 5px 10px);border:1px solid rgba(62,35,48,.14)"></div>
+            <span style="display:flex;flex-direction:column"><span style="font-size:14px;font-weight:600">Meet the {{ b.name }} →</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:#6E5A62">{{ b.vi }}</span></span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="ingredients" style="max-width:1320px;margin:0 auto;padding:96px 28px 0;scroll-margin-top:90px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;padding-bottom:22px">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'Instrument Serif',serif;font-size:clamp(36px,3.6vw,48px);line-height:1">The ingredients</div><div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:#6E5A62">Nguyên liệu từ vườn &amp; vùng quê</div></div>
+      <div style="font-size:14px;color:#6E5A62">Choose one to see what we make from it</div>
+    </div>
+    <div style="display:flex;gap:18px;overflow-x:auto;padding-bottom:6px">
+      <sc-for list="{{ ings }}" as="g" hint-placeholder-count="7">
+        <div onClick="{{ g.pick }}" style="flex:none;width:118px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;cursor:pointer">
+          <div style="width:104px;height:104px;border-radius:50%;background:repeating-linear-gradient(135deg,{{ g.t1 }} 0 7px,{{ g.t2 }} 7px 14px);border:2px solid {{ g.ring }};box-sizing:border-box"></div>
+          <div style="font-size:14.5px;font-weight:600;line-height:1.15">{{ g.name }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:#6E5A62;margin-top:-5px">{{ g.vi }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:26px;background:#FBF8F2;border:1px solid rgba(62,35,48,.14);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
+      <div style="min-height:300px;background:repeating-linear-gradient(135deg,{{ ig.t1 }} 0 9px,{{ ig.t2 }} 9px 18px);display:flex;align-items:flex-end;padding:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5b4650;background:rgba(245,240,230,.85);padding:3px 7px">PHOTO · {{ ig.photo }}</span></div>
+      <div style="padding:32px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:{{ ig.statusColor }}">{{ ig.status }}</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:52px;line-height:.92;letter-spacing:-.02em">{{ ig.name }}</div>
+        <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;color:#6E5A62">{{ ig.vi }}</div>
+        <p style="margin:6px 0 0;font-size:16px;line-height:1.6;text-wrap:pretty">{{ ig.story }}</p>
+        <div style="font-size:13.5px;color:#6E5A62">Grown · {{ ig.where }}</div>
+        <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:6px;max-width:420px">
+          <sc-for list="{{ ig.cells }}" as="c" hint-placeholder-count="12"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="height:14px;width:100%;border-radius:2px;background:{{ c.bg }};outline:{{ c.ol }}"></div><span style="font-size:10px;color:#6E5A62">{{ c.l }}</span></div></sc-for>
+        </div>
+      </div>
+      <div style="padding:32px;border-left:1px solid rgba(62,35,48,.12);display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#6E5A62">Made with {{ ig.name }} · Sản phẩm</div>
+        <sc-for list="{{ igProducts }}" as="p" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(62,35,48,.12)">
+            <div style="width:64px;height:80px;background:repeating-linear-gradient(135deg,{{ p.t1 }} 0 6px,{{ p.t2 }} 6px 12px)"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-family:'Instrument Serif',serif;font-size:20px;line-height:1.05">{{ p.name }}</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;color:#6E5A62">{{ p.vi }}</span><span style="font-size:13px">{{ p.priceFrom }}</span></div>
+            <div onClick="{{ p.add }}" style-hover="background:#3E2330;color:#F5F0E6" style="padding:9px 14px;border:1px solid #3E2330;border-radius:999px;font-size:13px;cursor:pointer;transition:all .15s">Add</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop" style="max-width:1320px;margin:0 auto;padding:96px 28px 0;scroll-margin-top:90px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;padding-bottom:22px;border-bottom:1px solid #3E2330">
+      <div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:'Instrument Serif',serif;font-size:clamp(40px,4.4vw,60px);line-height:.95">The Shop</div><div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:#6E5A62">Cửa hàng</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+          <div onClick="{{ c.onClick }}" style="padding:9px 16px;border-radius:999px;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};border:1px solid rgba(62,35,48,.25);display:flex;gap:6px;align-items:baseline"><span style="font-size:14px">{{ c.en }}</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;opacity:.75">{{ c.vi }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:40px 22px;padding-top:30px">
+      <sc-for list="{{ shopList }}" as="p" hint-placeholder-count="8">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="aspect-ratio:4/5;position:relative;background:repeating-linear-gradient(135deg,{{ p.t1 }} 0 8px,{{ p.t2 }} 8px 16px);display:flex;align-items:flex-end;justify-content:space-between;padding:10px;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5b4650;background:rgba(245,240,230,.85);padding:3px 6px;text-transform:uppercase">{{ p.label }}</span>
+            <span onClick="{{ p.add }}" style-hover="background:#3E2330;color:#F5F0E6" style="background:#F5F0E6;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s">Add +</span>
+          </div>
+          <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#6E5A62">{{ p.catLabel }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:23px;line-height:1.05;margin-top:-3px">{{ p.name }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:16px;color:#6E5A62;margin-top:-5px">{{ p.vi }}</div>
+          <div style="font-size:13.5px;color:#4F3A44;line-height:1.45">{{ p.note }}</div>
+          <div style="font-size:14px;font-weight:500">{{ p.priceFrom }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="calendar" style="margin:96px 0 0;background:#EADFB6;scroll-margin-top:90px">
+    <div style="max-width:1320px;margin:0 auto;padding:64px 28px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#5A4A1E">The Harvest Calendar · Lịch thu hoạch</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:clamp(56px,6vw,88px);line-height:.88;letter-spacing:-.03em">{{ calEn }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:26px;color:#5A4A1E">{{ calVi }}</div>
+          <p style="margin:6px 0 0;font-size:16px;line-height:1.6;max-width:400px">We only make what the land gives us that month. Choose a month to see what’s being picked.</p>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;max-width:400px;margin-top:8px">
+            <sc-for list="{{ monthChips }}" as="m" hint-placeholder-count="12">
+              <div onClick="{{ m.onClick }}" style="padding:10px 0;border-radius:999px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:{{ m.bg }};color:{{ m.fg }};border:1px solid rgba(62,35,48,.25)">{{ m.short }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:150px repeat(12,1fr);gap:4px;font-size:11px;font-weight:600;color:#5A4A1E;padding-bottom:8px">
+            <span></span>
+            <sc-for list="{{ monthLetters }}" as="ml" hint-placeholder-count="12"><span style="text-align:center;color:{{ ml.color }}">{{ ml.l }}</span></sc-for>
+          </div>
+          <sc-for list="{{ calRows }}" as="r" hint-placeholder-count="7">
+            <div onClick="{{ r.pick }}" style="display:grid;grid-template-columns:150px repeat(12,1fr);gap:4px;align-items:center;padding:9px 0;border-top:1px solid rgba(62,35,48,.18);cursor:pointer;opacity:{{ r.op }}">
+              <span style="display:flex;flex-direction:column;line-height:1.1"><span style="font-size:14px;font-weight:600">{{ r.name }}</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;color:#5A4A1E">{{ r.vi }}</span></span>
+              <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="12"><div style="height:20px;border-radius:2px;background:{{ c.bg }};outline:{{ c.ol }}"></div></sc-for>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="box" style="background:#4A2735;color:#F5F0E6;scroll-margin-top:90px">
+    <div style="max-width:1320px;margin:0 auto;padding:72px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:center">
+      <div style="aspect-ratio:1/1;background:repeating-linear-gradient(135deg,#5A3545 0 10px,#52303F 10px 20px);display:flex;align-items:flex-end;padding:14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#EADFB6;background:rgba(62,35,48,.7);padding:4px 8px">PHOTO · DÃ QUỲ &amp; COSMOS IN BANANA LEAF</span></div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#EADFB6">The Flower Box · Hộp hoa tươi</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:clamp(42px,4.6vw,64px);line-height:.95;letter-spacing:-.02em">A box of the hillside, delivered every week.</div>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#E4D6DB;max-width:480px">Cut the morning of delivery from Madagui and our Đà Lạt growers. Pause or skip any time.</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ boxSizes }}" as="b" hint-placeholder-count="3">
+            <div onClick="{{ b.onClick }}" style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;border:1px solid {{ b.bd }};background:{{ b.bg }}">
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Instrument Serif',serif;font-size:23px;line-height:1">{{ b.name }}</span><span style="font-size:13px;color:#E4D6DB">{{ b.stems }}</span></span>
+              <span style="font-size:14.5px;font-weight:500">{{ b.price }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:rgba(245,240,230,.1);padding:4px;border-radius:999px">
+          <sc-for list="{{ boxFreqs }}" as="q" hint-placeholder-count="3">
+            <div onClick="{{ q.onClick }}" style="padding:11px 4px;text-align:center;border-radius:999px;font-size:14px;cursor:pointer;background:{{ q.bg }};color:{{ q.fg }}">{{ q.label }}</div>
+          </sc-for>
+        </div>
+        <div onClick="{{ subscribe }}" style-active="opacity:.85" style="align-self:flex-start;background:#F5F0E6;color:#3E2330;padding:16px 28px;border-radius:999px;font-size:15px;font-weight:500;cursor:pointer">Start subscription · {{ boxPer }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journal" style="max-width:1320px;margin:0 auto;padding:96px 28px 0;scroll-margin-top:90px">
+    <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:22px;border-bottom:1px solid #3E2330"><div style="font-family:'Instrument Serif',serif;font-size:clamp(40px,4.4vw,60px);line-height:.95">From the cordial bar</div><div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:#6E5A62">Công thức pha chế</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px;padding-top:30px">
+      <sc-for list="{{ recipes }}" as="r" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="aspect-ratio:4/5;background:repeating-linear-gradient(135deg,{{ r.t1 }} 0 8px,{{ r.t2 }} 8px 16px);display:flex;align-items:flex-end;padding:10px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5b4650;background:rgba(245,240,230,.85);padding:3px 6px">PHOTO · {{ r.photo }}</span></div>
+          <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#6E5A62">{{ r.time }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:28px;line-height:1">{{ r.name }}</div>
+          <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:17px;color:#6E5A62;margin-top:-4px">{{ r.vi }}</div>
+          <div style="font-size:14.5px;line-height:1.5;color:#4F3A44">{{ r.method }}</div>
+          <div onClick="{{ r.add }}" style="font-size:14px;font-weight:600;text-decoration:underline;cursor:pointer">Add the {{ r.pname }} →</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="visit" style="max-width:1320px;margin:0 auto;padding:96px 28px 0;scroll-margin-top:90px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#55654A">Visit the farm · Ghé thăm vườn</div>
+        <div style="font-family:'Instrument Serif',serif;font-size:clamp(40px,4.4vw,60px);line-height:.95;letter-spacing:-.02em">Come up for the weekend. Bring a basket.</div>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#4F3A44">Km 152, QL20 · Madagui, Lâm Đồng — about 2½ hours from Saigon. Open Friday to Sunday.</p>
+        <div style="aspect-ratio:16/10;background:repeating-linear-gradient(135deg,#D9DDC8 0 9px,#CDD2B9 9px 18px);display:flex;align-items:flex-end;padding:12px;margin-top:6px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5b4650;background:rgba(245,240,230,.85);padding:3px 7px">PHOTO · LONG TABLE UNDER THE PINES</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ exps }}" as="e" hint-placeholder-count="3">
+          <div onClick="{{ e.onClick }}" style="padding:20px;cursor:pointer;background:{{ e.bg }};border:1px solid {{ e.bd }};display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap"><span style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1">{{ e.name }}</span><span style="font-size:14px;font-weight:500">{{ e.priceStr }}</span></div>
+            <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:16px;color:#6E5A62">{{ e.vi }} · {{ e.dur }}</div>
+            <div style="font-size:14.5px;line-height:1.5;color:#4F3A44">{{ e.desc }}</div>
+          </div>
+        </sc-for>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:8px">
+          <sc-for list="{{ visitDays }}" as="d" hint-placeholder-count="6">
+            <div onClick="{{ d.onClick }}" style="width:64px;padding:10px 0;text-align:center;cursor:pointer;display:flex;flex-direction:column;gap:2px;background:{{ d.bg }};color:{{ d.fg }};border:1px solid rgba(62,35,48,.22)">
+              <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600">{{ d.wd }}</span>
+              <span style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1">{{ d.dd }}</span>
+              <span style="font-size:10.5px;opacity:.8">{{ d.mo }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-size:14px">Guests · Khách</span>
+            <div style="display:flex;align-items:center;border:1px solid rgba(62,35,48,.25);border-radius:999px;height:44px">
+              <div onClick="{{ guestDec }}" style="width:40px;text-align:center;cursor:pointer;font-size:18px">−</div>
+              <div style="min-width:18px;text-align:center;font-weight:500">{{ guests }}</div>
+              <div onClick="{{ guestInc }}" style="width:40px;text-align:center;cursor:pointer;font-size:18px">+</div>
+            </div>
+          </div>
+          <div onClick="{{ bookVisit }}" style-active="opacity:.85" style="background:#55654A;color:#F5F0E6;padding:15px 26px;border-radius:999px;font-size:15px;font-weight:500;cursor:pointer">Reserve · {{ visitTotal }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:110px;background:#3E2330;color:#F5F0E6">
+    <div style="max-width:1320px;margin:0 auto;padding:56px 28px 36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:36px">
+      <div style="display:flex;flex-direction:column;gap:14px"><img src="assets/logo-cream.png" alt="Elderflowers Garden" style="height:110px;width:auto;align-self:flex-start"><span style="font-size:14px;color:#E4D6DB">Grown in Madagui · Bottled in Saigon</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px"><span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#EADFB6">Shop</span><a href="#shop" style="color:#F5F0E6;text-decoration:none">Cordials · Siro</a><a href="#box" style="color:#F5F0E6;text-decoration:none">Flower Box · Hộp hoa</a><a href="#shop" style="color:#F5F0E6;text-decoration:none">Candles · Nến thơm</a><a href="#shop" style="color:#F5F0E6;text-decoration:none">Bath · Tắm gội</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14.5px"><span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#EADFB6">The farm</span><a href="#story" style="color:#F5F0E6;text-decoration:none">Our story</a><a href="#calendar" style="color:#F5F0E6;text-decoration:none">Harvest calendar</a><a href="#visit" style="color:#F5F0E6;text-decoration:none">Visit Madagui</a></div>
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#EADFB6">Letters from the garden</span><span style="font-family:'Instrument Serif',serif;font-size:22px;line-height:1.15">One letter a month, when something blooms.</span>
+        <div style="display:flex;border-bottom:1px solid #F5F0E6;padding:8px 0;justify-content:space-between;gap:8px"><span style="font-size:14px;color:#C9B6BE">email@example.com</span><span onClick="{{ subscribeLetter }}" style="font-size:14px;cursor:pointer">→</span></div>
+      </div>
+    </div>
+    <div style="max-width:1320px;margin:0 auto;padding:18px 28px 28px;border-top:1px solid rgba(245,240,230,.18);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:#C9B6BE"><span>© 2026 Elderflowers Garden</span><span>Zalo · Instagram · Facebook</span></div>
+  </footer>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;background:#3E2330;color:#F5F0E6;padding:14px 20px;border-radius:999px;font-size:14px;display:flex;gap:14px;align-items:center;box-shadow:0 12px 30px rgba(0,0,0,.25);max-width:calc(100vw - 40px)">
+      <span>{{ toast }}</span><span onClick="{{ openBag }}" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-decoration:underline;cursor:pointer;flex:none">View bag</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ bagOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeBag }}" style="position:fixed;inset:0;background:rgba(30,18,24,.4);z-index:70"></div>
+    <aside style="position:fixed;top:0;right:0;bottom:0;width:min(440px,100vw);background:#F5F0E6;z-index:71;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.2)">
+      <div style="padding:24px 26px 16px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(62,35,48,.14)">
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1">{{ bagTitle }}</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:16px;color:#6E5A62">{{ bagTitleVi }}</span></div>
+        <span onClick="{{ closeBag }}" style="font-size:14px;cursor:pointer;padding:8px 0;text-decoration:underline">Close</span>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:0 26px">
+        <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px 0;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#55654A">{{ doneNo }}</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:40px;line-height:.98">It’s being picked now.</div>
+            <div style="font-size:15px;line-height:1.6;color:#4F3A44">We’ll message you on Zalo when the courier leaves the studio. Total paid on delivery: <b>{{ doneTotal }}</b>.</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ bagEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:60px 0;text-align:center;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:26px;color:#4F3A44">Nothing picked yet.</span><span style="font-size:14px;color:#6E5A62">Chưa có gì trong giỏ.</span></div>
+        </sc-if>
+        <sc-for list="{{ bagItems }}" as="it" hint-placeholder-count="0">
+          <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(62,35,48,.14)">
+            <div style="width:72px;height:90px;flex:none;background:repeating-linear-gradient(135deg,{{ it.t1 }} 0 6px,{{ it.t2 }} 6px 12px)"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0">
+              <span style="font-family:'Instrument Serif',serif;font-size:20px;line-height:1.05">{{ it.name }}</span>
+              <span style="font-size:12.5px;color:#6E5A62">{{ it.sizeLabel }}</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto">
+                <div style="display:flex;align-items:center;border:1px solid rgba(62,35,48,.25);border-radius:999px;height:34px">
+                  <div onClick="{{ it.dec }}" style="width:34px;text-align:center;cursor:pointer;font-size:17px">−</div>
+                  <div style="min-width:16px;text-align:center;font-size:14px">{{ it.qty }}</div>
+                  <div onClick="{{ it.inc }}" style="width:34px;text-align:center;cursor:pointer;font-size:17px">+</div>
+                </div>
+                <span style="font-size:14px;font-weight:500">{{ it.priceStr }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ bagFull }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ toggleWrap }}" style="padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer">
+            <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px">Gift wrap &amp; handwritten note</span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:14px;color:#6E5A62">Gói lá chuối, dây gai · + {{ wrapPrice }}</span></span>
+            <div style="width:46px;height:28px;flex:none;border-radius:999px;background:{{ wrapTrack }};position:relative;transition:background .2s"><div style="position:absolute;top:3px;left:{{ wrapKnob }};width:22px;height:22px;border-radius:50%;background:#FBF8F2;transition:left .2s"></div></div>
+          </div>
+          <sc-if value="{{ wrap }}" hint-placeholder-val="{{ false }}">
+            <textarea value="{{ wrapNote }}" onChange="{{ onWrapNote }}" placeholder="Gửi mẹ, một chút hương vườn…" rows="3" maxlength="160" style="width:100%;box-sizing:border-box;padding:14px;border:1px solid rgba(62,35,48,.22);background:#FBF8F2;resize:none;color:#3E2330;font-family:'Instrument Serif',serif;font-size:19px;outline:none;margin-bottom:16px"></textarea>
+          </sc-if>
+        </sc-if>
+      </div>
+      <sc-if value="{{ bagFull }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px 26px 26px;border-top:1px solid rgba(62,35,48,.14);display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;justify-content:space-between;font-size:14.5px"><span style="color:#4F3A44">Delivery · Giao hàng</span><span>{{ deliveryStr }}</span></div>
+          <div style="font-size:12.5px;color:#6E5A62">{{ freeHint }}</div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:4px"><span style="font-family:'Instrument Serif',serif;font-size:24px">Total · Tổng</span><span style="font-size:18px;font-weight:600">{{ totalStr }}</span></div>
+          <div onClick="{{ checkout }}" style-active="opacity:.85" style="height:52px;border-radius:999px;background:#3E2330;color:#F5F0E6;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer">Checkout · Thanh toán</div>
+        </div>
+      </sc-if>
+    </aside>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATS = { cordial: ['Cordials', 'Siro'], flowers: ['Flowers', 'Hoa tươi'], candle: ['Candles', 'Nến thơm'], bath: ['Bath', 'Tắm gội'] };
+const ING = [
+  { id: 'elder', name: 'Elderflower', vi: 'Hoa cơm cháy', where: 'Upper terraces, Madagui · Lâm Đồng', months: [9, 10, 11, 0, 1], t: ['#EDE4C4', '#E3D8B0'], photo: 'ELDERFLOWER UMBELS, CLOSE', story: 'Creamy umbels that open for only a few weeks after the rains. We pick at first light, when the pollen still holds its honeyed scent, and steep them the same morning.' },
+  { id: 'lemon', name: 'Lemon', vi: 'Chanh', where: 'Lower orchard, Madagui', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], t: ['#EFE6A8', '#E6DB92'], photo: 'LEMONS IN A BAMBOO BASKET', story: 'Thin-skinned, fragrant lemons that fruit almost all year in the mild highland air. The zest goes into cordial, the peel into candles.' },
+  { id: 'honey', name: 'Wild honey', vi: 'Mật ong rừng', where: 'Forest hives, Đạ Huoai', months: [2, 3, 4], t: ['#E8CF9A', '#DEC283'], photo: 'HONEYCOMB ON A WOODEN BOARD', story: 'Gathered once a year from hives in the forest below the farm, when the coffee and longan blossom. Dark, floral and a little smoky.' },
+  { id: 'mint', name: 'Mint', vi: 'Bạc hà', where: 'Kitchen garden, Madagui', months: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], t: ['#D3E0C9', '#C4D4B8'], photo: 'MINT BEDS AFTER RAIN', story: 'Grown along the stream that runs through the kitchen garden. Cut weekly for cold-process soap and steeped into cordials.' },
+  { id: 'lemongrass', name: 'Lemongrass', vi: 'Sả', where: 'Bảo Lộc partner farm', months: [4, 5, 6, 7, 8, 9], t: ['#DCE2C4', '#CFD7B3'], photo: 'LEMONGRASS BUNDLES DRYING', story: 'Bright and green-citrus. Our friends in Bảo Lộc distil it for candles and hand wash.' },
+  { id: 'pomelo', name: 'Pomelo', vi: 'Bưởi', where: 'Orchards in Bến Tre', months: [7, 8, 9, 10, 11, 0], t: ['#EFE9DA', '#E4DCC8'], photo: 'POMELO PEEL DRYING IN THE SUN', story: 'The peel, roasted the old way, goes into our shampoo; the blossom scents our best-loved candle.' },
+  { id: 'daquy', name: 'Wild sunflower', vi: 'Dã quỳ', where: 'Hillsides around Đà Lạt', months: [9, 10, 11], t: ['#F0D88E', '#E8CC75'], photo: 'DÃ QUỲ ALONG THE HILL ROAD', story: 'Every November the highland roads turn gold. We cut a handful for each flower box while they last.' }
+];
+const P = [
+  { id: 'elder', cat: 'cordial', name: 'Elderflower Cordial', vi: 'Siro hoa cơm cháy', price: 220000, size: '250ml', ings: ['elder', 'lemon'], note: 'Honeyed elderflower, a lift of lemon.', t: ['#EDE4C4', '#E3D8B0'], label: 'cordial bottle' },
+  { id: 'lemonhoney', cat: 'cordial', name: 'Lemon with Honey Cordial', vi: 'Siro chanh mật ong', price: 200000, size: '250ml', ings: ['lemon', 'honey'], note: 'Sharp lemon, dark forest honey.', t: ['#EFE0A6', '#E5D48F'], label: 'cordial bottle' },
+  { id: 'wildbox', cat: 'flowers', name: 'The Madagui Wild Box', vi: 'Hộp hoa đồng nội', price: 450000, size: 'Petite', ings: ['daquy', 'elder'], note: 'Dã quỳ, cosmos, field grasses.', t: ['#ECD9A0', '#E3CD8C'], label: 'flower box' },
+  { id: 'mintsoap', cat: 'bath', name: 'Mint Soap', vi: 'Xà bông bạc hà', price: 160000, size: '120g bar', ings: ['mint'], note: 'Cold-process, cured six weeks.', t: ['#D3E0C9', '#C4D4B8'], label: 'soap bar' },
+  { id: 'elcandle', cat: 'candle', name: 'Elderflower & Lemon Candle', vi: 'Nến hoa cơm cháy & chanh', price: 590000, size: '220g', ings: ['elder', 'lemon'], note: 'Lemon zest, elderflower, soft musk.', t: ['#F0EAD2', '#E6DEC0'], label: 'candle' },
+  { id: 'pomcandle', cat: 'candle', name: 'Pomelo Blossom Candle', vi: 'Nến hoa bưởi', price: 590000, size: '220g', ings: ['pomelo'], note: 'Pomelo blossom, jasmine, white wood.', t: ['#EFE9DA', '#E4DCC8'], label: 'candle' },
+  { id: 'lgcandle', cat: 'candle', name: 'Lemongrass & Mint Candle', vi: 'Nến sả & bạc hà', price: 560000, size: '220g', ings: ['lemongrass', 'mint'], note: 'Lemongrass, mint leaf, vetiver.', t: ['#DCE2C4', '#CFD7B3'], label: 'candle' },
+  { id: 'shampoo', cat: 'bath', name: 'Pomelo Peel Shampoo', vi: 'Dầu gội vỏ bưởi', price: 380000, size: '300ml', ings: ['pomelo'], note: 'Our grandmothers’ hair wash, reformulated.', t: ['#E1D3BC', '#D5C5AB'], label: 'shampoo' }
+];
+const STORY = [
+  { kicker: 'I · The hill', ing: 'elder', text: 'Madagui sits on the old road between Saigon and Đà Lạt, where the lowlands give way to pine and cool red soil. The terraces once grew coffee. Now they grow elderflower, and every morning the mist decides when we can start.' },
+  { kicker: 'II · The orchard & the forest', ing: 'honey', text: 'Below the terraces are lemon trees our neighbours planted thirty years ago, and below those, the forest. Once a year we walk down with the beekeepers to gather wild honey for our Lemon with Honey cordial.' },
+  { kicker: 'III · The kitchen garden', ing: 'mint', text: 'Along the stream, mint grows faster than we can cut it. Most goes into soap, cured on wooden racks in the old drying house for six weeks.' }
+];
+const RECIPES = [
+  { name: 'Elderflower spritz', vi: 'Spritz hoa cơm cháy', time: '2 min · aperitivo', pid: 'elder', photo: 'SPRITZ ON STONE', method: '30ml cordial, top with sparkling wine, a sprig of mint.', t: ['#EDE4C4', '#E3D8B0'] },
+  { name: 'Hot lemon & honey', vi: 'Chanh mật ong nóng', time: '3 min · rainy day', pid: 'lemonhoney', photo: 'STEAMING GLASS', method: '40ml cordial, hot water, a coin of ginger.', t: ['#EFE0A6', '#E5D48F'] },
+  { name: 'Elderflower & mint iced tea', vi: 'Trà đá hoa cơm cháy', time: '5 min · afternoon', pid: 'elder', photo: 'ICED TEA, MINT', method: 'Cold green tea, 25ml cordial, crushed mint, lots of ice.', t: ['#D3E0C9', '#C4D4B8'] }
+];
+const BOX = [{ name: 'Petite', stems: '8–10 stems · a bedside jar', price: 450000 }, { name: 'Garden', stems: '15–18 stems · the kitchen table', price: 650000 }, { name: 'Abundance', stems: '25+ stems · the whole house', price: 950000 }];
+const FREQ = ['Weekly', 'Fortnightly', 'Monthly'];
+const EXPS = [
+  { name: 'Morning harvest walk', vi: 'Dạo vườn buổi sáng', dur: '2 hours', desc: 'Pick elderflower at first light, then breakfast on the terrace.', price: 450000 },
+  { name: 'Cordial workshop', vi: 'Lớp làm siro', dur: '3 hours', desc: 'Steep, strain and bottle your own — take two home.', price: 850000 },
+  { name: 'Long-table supper', vi: 'Bữa tối bàn dài', dur: 'Evening', desc: 'A seasonal dinner from the garden, under the pines.', price: 1200000 }
+];
+const MEN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MVI = ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'];
+const MSH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const INK = '#3E2330', CREAM = '#F5F0E6', PAPER = '#FBF8F2', SAGE = '#55654A', LINE = 'rgba(62,35,48,.2)';
+const NOW = new Date().getMonth();
+const WRAP = 30000;
+
+class Component extends DCLogic {
+  state = { ing: 'elder', cat: 'all', calMonth: NOW, bag: [], bagOpen: false, wrap: false, wrapNote: '', toast: null, box: { size: 1, freq: 0 }, visit: { exp: 0, day: 0, guests: 2 }, done: null };
+  toast(msg) { clearTimeout(this._t); this.setState({ toast: msg }); this._t = setTimeout(() => this.setState({ toast: null }), 2600); }
+  componentWillUnmount() { clearTimeout(this._t); }
+  add(item) { this.setState(s => { const bag = [...s.bag]; const i = bag.findIndex(b => b.key === item.key); if (i >= 0) bag[i] = { ...bag[i], qty: bag[i].qty + 1 }; else bag.push({ ...item, qty: 1 }); return { bag, done: null }; }); this.toast('Added · Đã thêm — ' + item.name); }
+  setQty(key, d) { this.setState(s => ({ bag: s.bag.map(b => b.key === key ? { ...b, qty: b.qty + d } : b).filter(b => b.qty > 0) })); }
+  pickIng(id) { this.setState({ ing: id }); const el = document.getElementById('ingredients'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); }
+
+  renderVals() {
+    const s = this.state;
+    const f = v => v.toLocaleString('vi-VN') + '₫';
+    const sel = on => ({ bg: on ? INK : 'transparent', fg: on ? CREAM : INK });
+    const cells = months => MSH.map((m, i) => ({ l: m[0], bg: months.includes(i) ? INK : 'rgba(62,35,48,.1)', ol: i === NOW ? '1.5px solid ' + SAGE : 'none' }));
+    const status = g => { const on = g.months.includes(NOW), next = g.months.includes((NOW + 1) % 12); return on ? (g.months.length === 12 ? 'All year · Quanh năm' : next ? 'Picking now · Đang mùa' : 'Last weeks · Cuối mùa') : 'From ' + MSH[g.months.find(m => m > NOW) ?? g.months[0]]; };
+    const ings = ING.map(g => ({ ...g, t1: g.t[0], t2: g.t[1], cells: cells(g.months), status: status(g), statusColor: g.months.includes(NOW) ? SAGE : '#8A6A3E', ring: s.ing === g.id ? INK : 'transparent', pick: () => this.pickIng(g.id) }));
+    const mkP = p => ({ ...p, t1: p.t[0], t2: p.t[1], catLabel: CATS[p.cat].join(' · '), priceFrom: f(p.price) + ' · ' + p.size, add: () => this.add({ key: p.id, name: p.name, sizeLabel: p.size + ' · ' + p.vi, price: p.price, t: p.t }) });
+    const all = P.map(mkP);
+    const ig = ings.find(g => g.id === s.ing);
+    const bagCount = s.bag.reduce((a, b) => a + b.qty, 0);
+    const sub = s.bag.reduce((a, b) => a + b.price * b.qty, 0);
+    const wrapFee = s.wrap && sub ? WRAP : 0;
+    const delivery = sub === 0 || sub >= 1000000 ? 0 : 35000;
+    const total = sub + wrapFee + delivery;
+    const cm = s.calMonth;
+    const days = []; { const d0 = new Date(); let i = 1; while (days.length < 6 && i < 40) { const d = new Date(d0); d.setDate(d0.getDate() + i++); if ([0, 5, 6].includes(d.getDay())) days.push({ wd: WD[d.getDay()], dd: d.getDate(), mo: MSH[d.getMonth()] }); } }
+    const ex = EXPS[s.visit.exp], bs = BOX[s.box.size];
+    const setVisit = p => this.setState(st => ({ visit: { ...st.visit, ...p } }));
+    const setBox = p => this.setState(st => ({ box: { ...st.box, ...p } }));
+
+    return {
+      monthEn: MEN[NOW], monthVi: MVI[NOW], bagCount,
+      openBag: () => this.setState({ bagOpen: true }), closeBag: () => this.setState({ bagOpen: false, done: null }),
+      storyBlocks: STORY.map(b => { const g = ings.find(x => x.id === b.ing); return { ...b, name: g.name.toLowerCase(), vi: g.vi, t1: g.t1, t2: g.t2, pick: g.pick }; }),
+      ings, ig, igProducts: all.filter(p => p.ings.includes(ig.id)),
+      cats: [['all', ['Everything', 'Tất cả']], ...Object.entries(CATS)].map(([k, [en, vi]]) => ({ en, vi, ...sel(s.cat === k), onClick: () => this.setState({ cat: k }) })),
+      shopList: s.cat === 'all' ? all : all.filter(p => p.cat === s.cat),
+      calEn: MEN[cm], calVi: MVI[cm],
+      monthChips: MSH.map((m, i) => ({ short: m, ...sel(cm === i), onClick: () => this.setState({ calMonth: i }) })),
+      monthLetters: MSH.map((m, i) => ({ l: m[0], color: i === cm ? INK : '#8A7A4E' })),
+      calRows: ings.map(g => ({ ...g, op: g.months.includes(cm) ? 1 : .4, cells: MSH.map((m, i) => ({ bg: g.months.includes(i) ? (i === cm ? SAGE : INK) : 'rgba(62,35,48,.1)', ol: i === cm ? '1.5px solid ' + INK : 'none' })) })),
+      boxSizes: BOX.map((b, i) => ({ ...b, price: f(b.price), bg: s.box.size === i ? 'rgba(245,240,230,.1)' : 'transparent', bd: s.box.size === i ? CREAM : 'rgba(245,240,230,.25)', onClick: () => setBox({ size: i }) })),
+      boxFreqs: FREQ.map((label, i) => ({ label, bg: s.box.freq === i ? CREAM : 'transparent', fg: s.box.freq === i ? INK : CREAM, onClick: () => setBox({ freq: i }) })),
+      boxPer: f(bs.price),
+      subscribe: () => this.add({ key: 'box-' + s.box.size + '-' + s.box.freq, name: `${bs.name} Flower Box`, sizeLabel: `${FREQ[s.box.freq]} subscription · Hộp hoa`, price: bs.price, t: ['#ECD9A0', '#E3CD8C'] }),
+      recipes: RECIPES.map(r => { const p = all.find(x => x.id === r.pid); return { ...r, t1: r.t[0], t2: r.t[1], pname: p.name, add: p.add }; }),
+      exps: EXPS.map((e, i) => ({ ...e, priceStr: f(e.price) + ' / guest', bg: s.visit.exp === i ? PAPER : 'transparent', bd: s.visit.exp === i ? INK : LINE, onClick: () => setVisit({ exp: i }) })),
+      visitDays: days.map((d, i) => ({ ...d, ...sel(s.visit.day === i), onClick: () => setVisit({ day: i }) })),
+      guests: s.visit.guests, guestInc: () => setVisit({ guests: Math.min(8, s.visit.guests + 1) }), guestDec: () => setVisit({ guests: Math.max(1, s.visit.guests - 1) }),
+      visitTotal: f(ex.price * s.visit.guests),
+      bookVisit: () => this.toast(`Reserved · Đã đặt — ${ex.name}, ${days[s.visit.day].wd} ${days[s.visit.day].dd} ${days[s.visit.day].mo}`),
+      subscribeLetter: () => this.toast('Thank you · Cảm ơn bạn đã đăng ký'),
+      toast: s.toast,
+      bagOpen: s.bagOpen, isDone: !!s.done, bagEmpty: !s.done && s.bag.length === 0, bagFull: s.bag.length > 0,
+      bagTitle: s.done ? 'Cảm ơn bạn.' : 'Your bag', bagTitleVi: s.done ? 'Thank you.' : `Giỏ hàng · ${bagCount} items`,
+      doneNo: s.done && s.done.no, doneTotal: s.done && s.done.total,
+      bagItems: s.bag.map(b => ({ ...b, t1: b.t[0], t2: b.t[1], priceStr: f(b.price * b.qty), inc: () => this.setQty(b.key, 1), dec: () => this.setQty(b.key, -1) })),
+      wrap: s.wrap, toggleWrap: () => this.setState(st => ({ wrap: !st.wrap })), wrapPrice: f(WRAP),
+      wrapTrack: s.wrap ? SAGE : 'rgba(62,35,48,.2)', wrapKnob: s.wrap ? '21px' : '3px',
+      wrapNote: s.wrapNote, onWrapNote: e => this.setState({ wrapNote: e.target.value }),
+      deliveryStr: delivery === 0 ? 'Free · Miễn phí' : f(delivery),
+      freeHint: delivery === 0 ? 'Free delivery in Saigon & Đà Lạt.' : `Add ${f(1000000 - sub)} for free delivery.`,
+      totalStr: f(total),
+      checkout: () => this.setState({ bag: [], wrap: false, wrapNote: '', done: { no: 'Order EG-' + Math.floor(20500 + Math.random() * 9000), total: f(total) } })
+    };
+  }
+}
+</script>
+</body>
+</html>
