@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Swatch } from "@/lib/data";
 
 /** Today's date. Equals the build date on the first render (matching the static HTML), then the real date. */
@@ -10,20 +10,34 @@ export function useToday() {
   return today;
 }
 
-/** Placeholder stripe colours, or the real photo when one is set. */
+/** Placeholder stripe colours, with the real photo layered on top when one is set (stripes show if it fails). */
 export const swatchVars = (s: Swatch, image?: string) =>
-  ({ "--t1": s[0], "--t2": s[1], ...(image ? { backgroundImage: `url("${image.replace(/"/g, "%22")}")`, backgroundSize: "cover", backgroundPosition: "center" } : {}) }) as CSSProperties;
+  ({
+    "--t1": s[0],
+    "--t2": s[1],
+    ...(image
+      ? { backgroundImage: `url("${image.replace(/"/g, "%22")}"), repeating-linear-gradient(135deg, ${s[0]} 0 6px, ${s[1]} 6px 12px)`, backgroundSize: "cover", backgroundPosition: "center" }
+      : {}),
+  }) as CSSProperties;
 
 /**
  * Striped photo placeholder from the design handoff. The caption describes the intended shot;
  * replace with real photography (<img>) once the client supplies it.
  */
 export function Photo({ src, swatch, caption, className = "", dark = false, eager = false }: { src?: string; swatch: Swatch; caption?: string; className?: string; dark?: boolean; eager?: boolean }) {
-  if (src) {
+  // A link that isn't an image (e.g. a web page) or a file that isn't shared falls back to the placeholder.
+  const [failed, setFailed] = useState<string | null>(null);
+  const img = useRef<HTMLImageElement>(null);
+  // An image that already failed before hydration never fires onError, so check once after mount.
+  useEffect(() => {
+    const el = img.current;
+    if (src && el && el.complete && el.naturalWidth === 0) setFailed(src);
+  }, [src]);
+  if (src && failed !== src) {
     return (
       <div className={`photo photo--img ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={caption ?? ""} loading={eager ? "eager" : "lazy"} decoding="async" />
+        <img ref={img} src={src} alt={caption ?? ""} loading={eager ? "eager" : "lazy"} decoding="async" onError={() => setFailed(src)} />
       </div>
     );
   }
