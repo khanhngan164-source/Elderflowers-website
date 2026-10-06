@@ -76,7 +76,8 @@ textarea, input { font-family: inherit; color: var(--ink); }
 /* ---------- Type ---------- */
 .serif { font-family: var(--serif); }
 .vi { font-family: var(--serif-vi); font-style: italic; color: var(--muted); letter-spacing: -0.01em; }
-.serif-vi, .chip__vi, .wrap-note textarea { font-family: var(--serif-vi); }
+[class].serif-vi, .chip__vi, .wrap-note textarea { font-family: var(--serif-vi); }
+[class].serif-vi { letter-spacing: -0.02em; }
 .vi--14 { font-size: 14px; } .vi--15 { font-size: 15px; } .vi--16 { font-size: 16px; } .vi--17 { font-size: 17px; }
 .vi--19 { font-size: 19px; } .vi--20 { font-size: 20px; } .vi--22 { font-size: 22px; }
 .tight { margin-top: -5px; }
@@ -337,3 +338,16 @@ button.cal__row:hover { opacity: 1; }
 .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .pay-option { padding: 14px 6px; text-align: center; font-size: 13.5px; border: 1px solid rgba(62, 35, 48, 0.22); }
 .pay-option.is-selected { background: var(--ink); color: var(--cream); }
+
+/* ---------- Real photos, forms & notices (CMS) ---------- */
+.photo--img { padding: 0; background: var(--paper); overflow: hidden; }
+.photo--img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-error { font-size: 13.5px; color: var(--error); line-height: 1.45; }
+.notice { font-size: 13.5px; line-height: 1.5; padding: 12px 14px; background: var(--butter); color: var(--butter-ink); }
+.pill:disabled, button:disabled { opacity: 0.6; cursor: progress; }
+.visit-contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; padding-top: 8px; }
+.visit-done { padding: 28px; background: var(--paper); border: 1px solid var(--ink); }
+.visit-done__title { font-size: 40px; line-height: 0.98; }
+.qr { display: flex; flex-direction: column; gap: 10px; padding: 16px; background: var(--paper); border: 1px solid var(--line-2); }
+.qr img { width: 100%; max-width: 280px; height: auto; align-self: center; }

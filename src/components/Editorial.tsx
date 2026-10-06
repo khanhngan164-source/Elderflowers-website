@@ -1,60 +1,62 @@
 "use client";
 
-import { INGREDIENTS, MONTHS_EN, MONTHS_SHORT, MONTHS_VI, PRODUCTS, STORY_BLOCKS, ingredientById } from "@/lib/data";
+import { MONTHS_EN, MONTHS_SHORT, MONTHS_VI } from "@/lib/data";
 import { formatVnd, seasonStatus } from "@/lib/logic";
-import { useBag } from "./BagProvider";
-import { Photo, swatchVars } from "./ui";
+import { useBag, useContent } from "./BagProvider";
+import { Photo, serifText, swatchVars } from "./ui";
 
 export function Hero({ month }: { month: number }) {
+  const { settings: s } = useContent();
   return (
     <section id="top" className="container hero">
       <div className="hero__meta">
-        <span>Issue No. 14 · Số 14</span>
+        <span>{s.issue}</span>
         <span>
           {MONTHS_EN[month]} · {MONTHS_VI[month]}
         </span>
-        <span>Madagui, Lâm Đồng · 1,000m</span>
+        <span>{s.location}</span>
       </div>
       <div className="hero__grid">
         <div className="hero__copy">
-          <h1 className="hero__title">The Elder&shy;flower Issue</h1>
-          <p lang="vi" className="vi hero__vi">Số đặc biệt: Hoa cơm cháy</p>
-          <p className="hero__dek">
-            Cordials, flowers and herbal goods from a hill once planted with coffee — picked before the sun burns the mist off, bottled and poured by hand.
-          </p>
+          <h1 {...serifText(s.hero_title, "hero__title")}>{s.hero_title}</h1>
+          <p lang="vi" className="vi hero__vi">{s.hero_vi}</p>
+          <p className="hero__dek">{s.hero_dek}</p>
           <div className="row-10">
             <a href="#story" className="pill pill--ink">Read the story</a>
             <a href="#shop" className="pill pill--outline">Shop the harvest</a>
           </div>
         </div>
-        <Photo swatch={["#E6DFC6", "#DCD3B6"]} caption="Elderflower heads at dawn, Madagui" className="ratio-5-4" />
+        <Photo src={s.hero_image} swatch={["#E6DFC6", "#DCD3B6"]} caption={s.hero_caption} className="ratio-5-4" eager />
       </div>
     </section>
   );
 }
 
 export function Story({ onPick }: { onPick: (id: string) => void }) {
+  const { settings, story, ingredients } = useContent();
   return (
     <section id="story" className="container section">
       <div className="story-grid">
         <div className="stack-10">
           <div className="kicker kicker--sage">The farm story · Câu chuyện</div>
-          <h2 className="section-title">Why we pick before the sun.</h2>
-          <p lang="vi" className="vi vi--20">Vì sao chúng tôi hái hoa trước bình minh.</p>
+          <h2 {...serifText(settings.story_title, "section-title")}>{settings.story_title}</h2>
+          <p lang="vi" className="vi vi--20">{settings.story_vi}</p>
         </div>
-        {STORY_BLOCKS.map((b) => {
-          const g = ingredientById(b.ing);
+        {story.map((b, i) => {
+          const g = ingredients.find((x) => x.id === b.ing);
           return (
-            <article key={b.kicker} className="story-block">
+            <article key={i} className="story-block">
               <div className="kicker">{b.kicker}</div>
               <p className="body">{b.text}</p>
-              <button type="button" className="meet" onClick={() => onPick(g.id)}>
-                <span className="swatch swatch--52" style={swatchVars(g.swatch)} />
-                <span className="stack-0">
-                  <span className="meet__en">Meet the {g.name.toLowerCase()} →</span>
-                  <span lang="vi" className="vi vi--15">{g.vi}</span>
-                </span>
-              </button>
+              {g && (
+                <button type="button" className="meet" onClick={() => onPick(g.id)}>
+                  <span className="swatch swatch--52" style={swatchVars(g.swatch, g.image)} />
+                  <span className="stack-0">
+                    <span className="meet__en">Meet the {g.name.toLowerCase()} →</span>
+                    <span lang="vi" className="vi vi--15">{g.vi}</span>
+                  </span>
+                </button>
+              )}
             </article>
           );
         })}
@@ -78,9 +80,11 @@ export function SeasonBar({ months, current }: { months: number[]; current: numb
 
 export function Ingredients({ selected, onPick, month }: { selected: string; onPick: (id: string) => void; month: number }) {
   const { add } = useBag();
-  const ig = ingredientById(selected);
+  const { ingredients, products } = useContent();
+  const ig = ingredients.find((g) => g.id === selected) ?? ingredients[0];
+  if (!ig) return null;
   const status = seasonStatus(ig, month);
-  const products = PRODUCTS.filter((p) => p.ings.includes(ig.id));
+  const made = products.filter((p) => p.ings.includes(ig.id));
 
   return (
     <section id="ingredients" className="container section">
@@ -93,17 +97,17 @@ export function Ingredients({ selected, onPick, month }: { selected: string; onP
       </div>
 
       <div className="ing-row" role="tablist" aria-label="Ingredients">
-        {INGREDIENTS.map((g) => (
+        {ingredients.map((g) => (
           <button
             key={g.id}
             type="button"
             role="tab"
-            aria-selected={g.id === selected}
+            aria-selected={g.id === ig.id}
             aria-controls="ingredient-panel"
-            className={`ing-chip ${g.id === selected ? "is-selected" : ""}`}
+            className={`ing-chip ${g.id === ig.id ? "is-selected" : ""}`}
             onClick={() => onPick(g.id)}
           >
-            <span className="swatch swatch--104" style={swatchVars(g.swatch)} />
+            <span className="swatch swatch--104" style={swatchVars(g.swatch, g.image)} />
             <span className="ing-chip__name">{g.name}</span>
             <span lang="vi" className="vi vi--15">{g.vi}</span>
           </button>
@@ -111,29 +115,30 @@ export function Ingredients({ selected, onPick, month }: { selected: string; onP
       </div>
 
       <div id="ingredient-panel" role="tabpanel" className="ing-panel" aria-live="polite">
-        <Photo swatch={ig.swatch} caption={ig.photo} className="ing-panel__photo" />
+        <Photo src={ig.image} swatch={ig.swatch} caption={ig.photo} className="ing-panel__photo" />
         <div className="ing-panel__body">
-          <div className={`kicker ${status.inSeason ? "kicker--sage" : "kicker--late"}`}>{status.label}</div>
-          <h3 className="ing-panel__name">{ig.name}</h3>
+          {status.label && <div className={`kicker ${status.inSeason ? "kicker--sage" : "kicker--late"}`}>{status.label}</div>}
+          <h3 {...serifText(ig.name, "ing-panel__name")}>{ig.name}</h3>
           <p lang="vi" className="vi vi--22">{ig.vi}</p>
           <p className="body">{ig.story}</p>
-          <p className="muted small">Grown · {ig.where}</p>
+          {ig.where && <p className="muted small">Grown · {ig.where}</p>}
           <SeasonBar months={ig.months} current={month} />
         </div>
         <div className="ing-panel__products">
           <div className="kicker">Made with {ig.name} · Sản phẩm</div>
-          {products.map((p) => (
+          {made.length === 0 && <p className="muted small">Coming soon · Sắp có</p>}
+          {made.map((p) => (
             <div key={p.id} className="mini-product">
-              <span className="swatch swatch--rect" style={swatchVars(p.swatch)} />
+              <span className="swatch swatch--rect" style={swatchVars(p.swatch, p.image)} />
               <span className="stack-2">
-                <span className="serif mini-product__name">{p.name}</span>
+                <span {...serifText(p.name, "serif mini-product__name")}>{p.name}</span>
                 <span lang="vi" className="vi vi--14">{p.vi}</span>
-                <span className="small">{formatVnd(p.price)} · {p.size}</span>
+                <span className="small">{formatVnd(p.price)}{p.size && ` · ${p.size}`}</span>
               </span>
               <button
                 type="button"
                 className="pill pill--outline pill--xs pill--hover-fill"
-                onClick={() => add({ key: p.id, name: p.name, sizeLabel: `${p.size} · ${p.vi}`, price: p.price, swatch: p.swatch })}
+                onClick={() => add({ key: p.id, name: p.name, sizeLabel: [p.size, p.vi].filter(Boolean).join(" · "), price: p.price, swatch: p.swatch })}
                 aria-label={`Add ${p.name} to bag`}
               >
                 Add

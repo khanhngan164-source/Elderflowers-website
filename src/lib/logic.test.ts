@@ -49,6 +49,7 @@ describe("upcomingVisitDays", () => {
   it("returns only Fri/Sat/Sun after the given day", () => {
     const days = upcomingVisitDays(new Date(2026, 9, 6)); // Tue 6 Oct 2026
     expect(days.map((d) => `${d.weekday} ${d.day}`)).toEqual(["Fri 9", "Sat 10", "Sun 11", "Fri 16", "Sat 17", "Sun 18"]);
+    expect(days[0].iso).toBe("2026-10-09");
   });
 });
 

@@ -1,0 +1,36 @@
+{
+  "settingsSheet": "CaiDat",
+  "settingsColumns": { "key": "Khoá", "value": "Giá trị", "note": "Ghi chú" },
+  "privateSettings": ["order_email"],
+  "tabs": {
+    "products": {
+      "sheet": "SanPham",
+      "columns": { "id": "Mã", "category": "Danh mục", "name": "Tên (EN)", "vi": "Tên (VI)", "price": "Giá (₫)", "size": "Quy cách", "note": "Mô tả ngắn", "ings": "Nguyên liệu (mã)", "image": "Ảnh (link)", "visible": "Hiển thị" }
+    },
+    "ingredients": {
+      "sheet": "NguyenLieu",
+      "columns": { "id": "Mã", "name": "Tên (EN)", "vi": "Tên (VI)", "where": "Nơi trồng", "months": "Tháng có mùa", "story": "Câu chuyện", "image": "Ảnh (link)", "photo": "Mô tả ảnh" }
+    },
+    "story": {
+      "sheet": "CauChuyen",
+      "columns": { "kicker": "Tiêu đề nhỏ", "text": "Nội dung", "ing": "Nguyên liệu (mã)" }
+    },
+    "recipes": {
+      "sheet": "CongThuc",
+      "columns": { "name": "Tên (EN)", "vi": "Tên (VI)", "time": "Thời gian", "method": "Cách làm", "productId": "Sản phẩm (mã)", "image": "Ảnh (link)" }
+    },
+    "box": {
+      "sheet": "HopHoa",
+      "columns": { "name": "Tên", "stems": "Mô tả", "price": "Giá (₫)" }
+    },
+    "experiences": {
+      "sheet": "TraiNghiem",
+      "columns": { "name": "Tên (EN)", "vi": "Tên (VI)", "duration": "Thời lượng", "desc": "Mô tả", "price": "Giá / khách (₫)" }
+    }
+  },
+  "records": {
+    "orders": { "sheet": "DonHang", "columns": ["Thời gian", "Mã đơn", "Trạng thái", "Họ tên", "SĐT", "Địa chỉ", "Khung giờ", "Thanh toán", "Sản phẩm", "Gói quà", "Lời nhắn", "Tạm tính", "Phí giao", "Phí gói", "Tổng"] },
+    "bookings": { "sheet": "DatLich", "columns": ["Thời gian", "Mã", "Trạng thái", "Họ tên", "SĐT", "Trải nghiệm", "Ngày", "Số khách", "Tổng"] },
+    "newsletter": { "sheet": "DangKyThu", "columns": ["Thời gian", "Email"] }
+  }
+}
