@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { checkPassword } from "@/lib/auth";
 import { buildUserMessage, SYSTEM_PROMPT } from "@/lib/prompt";
-import { DraftRequestSchema, DraftResultSchema } from "@/lib/types";
+import { WriteRequestSchema, WriteResultSchema } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -27,15 +27,15 @@ export async function POST(request: Request) {
   } catch {
     return fail(400, "Yêu cầu không hợp lệ.");
   }
-  const parsed = DraftRequestSchema.safeParse(body);
+  const parsed = WriteRequestSchema.safeParse(body);
   if (!parsed.success) return fail(400, parsed.error.issues[0]?.message ?? "Thiếu thông tin.");
 
   try {
     const response = await client.beta.messages.parse({
       model: "claude-opus-5-5",
       max_tokens: 16000,
-      // Email drafting is routine; medium keeps replies fast. Raise to "high" if quality falls short.
-      output_config: { effort: "medium", format: betaZodOutputFormat(DraftResultSchema) },
+      // Medium balances speed and quality for translation. Use "low" for faster replies, "high" if quality falls short.
+      output_config: { effort: "medium", format: betaZodOutputFormat(WriteResultSchema) },
       // If the model declines (false-positive safety refusal), the API retries on a suitable model.
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     });
 
     if (response.stop_reason === "refusal") {
-      return fail(422, "AI từ chối viết email này. Hãy thử diễn đạt lại ý bạn muốn nói.");
+      return fail(422, "AI từ chối xử lý nội dung này. Hãy thử diễn đạt lại.");
     }
     if (response.stop_reason === "max_tokens" || !response.parsed_output) {
       return fail(502, "AI trả về kết quả không đầy đủ. Hãy thử lại.");
